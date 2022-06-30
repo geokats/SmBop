@@ -112,9 +112,7 @@ def run():
         ext_vars=ext_vars,
         params_overrides=overrides_json,
     )
-    prefix = ""
-    # prefix = "/home/ohadr/"
-    prefix = "/media/disk1/ohadr/"
+    prefix = "./"
 
 
     assert not pathlib.Path(f"{prefix}experiments/{experiment_name}").exists()
