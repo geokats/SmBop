@@ -37,7 +37,7 @@ from pyparsing import (
 ParserElement.enablePackrat()
 
 # THE PARSING DEPTH IS NASTY
-sys.setrecursionlimit(2000)
+sys.setrecursionlimit(4000)
 
 
 DEBUG = False
