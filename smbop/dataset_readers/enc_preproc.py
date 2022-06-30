@@ -192,7 +192,7 @@ class EncPreproc:
                 search_path = "public" if db_id == 'skyserver_dr16_2020_11_30' else "oncomx_v1_0_25"
 
                 conn = psycopg2.connect(database='skyserver_dr16_2020_11_30', user=user, password=password, host=host,
-                                        port=port, options=f'-c search_path={search_path}, {db_id}')
+                                        port=port, options=f'-c search_path={search_path},{db_id}')
 
             else:
                 sqlite_path = Path(self._dataset_path) / db_id / f"{db_id}.sqlite"
