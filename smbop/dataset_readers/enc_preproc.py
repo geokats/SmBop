@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 import sqlite3
+import psycopg2
 import string
 import attr
 import nltk
@@ -179,14 +180,28 @@ class EncPreproc:
         print("before load_trees")
         self.schemas, self.eval_foreign_key_maps = self.load_tables([self._tables_file])
         print("before connecting")
+        #TODO: Make it work for postgres
         for db_id, schema in self.schemas.items():
-            sqlite_path = Path(self._dataset_path) / db_id / f"{db_id}.sqlite"
-            source: sqlite3.Connection
-            with sqlite3.connect(sqlite_path, check_same_thread=False) as source:
-                dest = sqlite3.connect(":memory:", check_same_thread=False)
-                dest.row_factory = sqlite3.Row
-                source.backup(dest)
-            schema.connection = dest
+            if db_id in ['skyserver_dr16_2020_11_30', 'oncomx_v1_0_25_small']:
+                print(f"Give connection info")
+                user = input("user: ")
+                password = input("password: ")
+                host = input("host: ")
+                port =  input("port: ")
+
+                search_path = "public" if db_id == 'skyserver_dr16_2020_11_30' else "oncomx_v1_0_25"
+
+                conn = psycopg2.connect(database='skyserver_dr16_2020_11_30', user=user, password=password, host=host,
+                                        port=port, options=f'-c search_path={search_path}, {db_id}')
+
+            else:
+                sqlite_path = Path(self._dataset_path) / db_id / f"{db_id}.sqlite"
+                source: sqlite3.Connection
+                with sqlite3.connect(sqlite_path, check_same_thread=False) as source:
+                    dest = sqlite3.connect(":memory:", check_same_thread=False)
+                    dest.row_factory = sqlite3.Row
+                    source.backup(dest)
+                schema.connection = dest
 
     def get_desc(self, tokenized_utterance, db_id):
         item = SpiderItem(
@@ -597,6 +612,7 @@ class EncPreproc:
             except:
                 return False
 
+        #TODO: Make it work for postgres
         def db_word_match(word, column, table, db_conn):
             # return False #fixme
             cursor = db_conn.cursor()

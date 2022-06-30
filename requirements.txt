@@ -11,3 +11,4 @@ en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_
 mo-future==2.48.19205
 gdown
 typer==0.4.1.
+psycopg2
