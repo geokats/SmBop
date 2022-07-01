@@ -23,6 +23,8 @@ parser.add_argument('-o', type=str, help='the output json file')
 args = parser.parse_args()
 
 def is_value(tok, column_names, table_names, aliases):
+    tok = tok.lower()
+    
     if tok in ['(', ')', '.', ',', '*',]:
         return False
     if tok in sql_words:
@@ -49,8 +51,8 @@ with open(args.t, 'r') as f:
 
 for table in tables_raw:
     db_id = table['db_id']
-    column_names = [name for i, name in table['column_names_original']]
-    table_names = table['table_names_original']
+    column_names = [name.lower() for i, name in table['column_names_original']]
+    table_names = [name.lower() for name in table['table_names_original']]
     tables[db_id] = {
         'column_names': column_names,
         'table_names': table_names
@@ -61,7 +63,7 @@ for example in examples:
     if 'query_toks_no_value' in example:
         continue
 
-    aliases = [example['query_toks'][i+1] for i, tok in enumerate(example['query_toks']) if tok in ('as', 'AS', 'As')]
+    aliases = [example['query_toks'][i+1].lower() for i, tok in enumerate(example['query_toks']) if tok in ('as', 'AS', 'As')]
 
     example['query_toks_no_value'] = []
     for tok in example['query_toks']:
