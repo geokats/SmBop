@@ -267,8 +267,13 @@ class SmbopSpiderDatasetReader(DatasetReader):
             except msp.ParseException as e:
                 print(f"could'nt create AST for:  {sql}")
                 return None
-            tree_obj = ra_preproc.ast_to_ra(tree_dict["query"])
-            tree_obj_values = ra_preproc.ast_to_ra(tree_dict_values["query"])
+
+            try:
+                tree_obj = ra_preproc.ast_to_ra(tree_dict["query"])
+                tree_obj_values = ra_preproc.ast_to_ra(tree_dict_values["query"])
+            except:
+                print(f"could'nt create RA for:  {sql}")
+                return None
 
             arit_list = anytree.search.findall(
                 tree_obj, filter_=lambda x: x.name in ["sub", "add"]
