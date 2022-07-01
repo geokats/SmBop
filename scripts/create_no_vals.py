@@ -10,9 +10,10 @@ COND_OPS = ('and', 'or')
 SQL_OPS = ('intersect', 'union', 'except')
 ORDER_OPS = ('desc', 'asc')
 DISTINCT = ('distinct',)
+BY = ('by',)
 
 sql_words = CLAUSE_KEYWORDS + JOIN_KEYWORDS + WHERE_OPS + \
-    UNIT_OPS + AGG_OPS + COND_OPS + SQL_OPS + ORDER_OPS + DISTINCT
+    UNIT_OPS + AGG_OPS + COND_OPS + SQL_OPS + ORDER_OPS + DISTINCT + BY
 sql_words = set(sql_words).union(set([word.upper() for word in sql_words]))
 
 parser = argparse.ArgumentParser()
@@ -24,7 +25,7 @@ args = parser.parse_args()
 
 def is_value(tok, column_names, table_names, aliases):
     tok = tok.lower()
-    
+
     if tok in ['(', ')', '.', ',', '*',]:
         return False
     if tok in sql_words:
