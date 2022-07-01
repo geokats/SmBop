@@ -26,7 +26,7 @@ args = parser.parse_args()
 def is_value(tok, column_names, table_names, aliases):
     tok = tok.lower()
 
-    if tok in ['(', ')', '.', ',', '*',]:
+    if tok in ['(', ')', '.', ',', '*', ';']:
         return False
     if tok in sql_words:
         return False
