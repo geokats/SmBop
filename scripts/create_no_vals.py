@@ -38,13 +38,13 @@ def is_value(tok, column_names, table_names, aliases):
         return False
     if "." in tok:
         # If there is a dot in the name
-        table, column = tok.split(".")
-        if (table in table_names or table in aliases) and column in column_names:
-            return False
-
-    # for col in column_names:
-    #     if col in tok:
-    #         return False
+        try:
+            table, column = tok.split(".")
+            if (table in table_names or table in aliases) and column in column_names:
+                return False
+        except:
+            #If there are more than one dots, it's not a column name
+            print(tok)
     
     return True
 
