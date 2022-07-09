@@ -40,7 +40,7 @@ class Replacer:
             isinstance(str_in, str)
             and str_in.lower() in self.mapping[db_id]["orig2name"]
         ):
-            str_in = self.mapping[db_id]["orig2name"][str_in]
+            str_in = self.mapping[db_id]["orig2name"][str_in.lower()]
         return str_in
 
     def post(self, str_in, db_id):
@@ -48,5 +48,5 @@ class Replacer:
             isinstance(str_in, str)
             and str_in.lower() in self.mapping[db_id]["name2orig"]
         ):
-            str_in = self.mapping[db_id]["name2orig"][str_in]
+            str_in = self.mapping[db_id]["name2orig"][str_in.lower()]
         return str_in
