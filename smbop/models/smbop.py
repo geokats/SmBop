@@ -856,6 +856,8 @@ a boolean vector to tell if a given span is a gold span (i.e it corrosponds to a
                     kwargs["top_beam_indices"], kwargs["is_gold_leaf"]
                 ):
                     is_gold_leaf_idx = is_gold_leaf_el.nonzero().squeeze().tolist()
+                    if not isinstance(is_gold_leaf_idx, list):
+                        is_gold_leaf_idx = list(is_gold_leaf_idx)
                     leaf_acc = int(
                         all([x in top_beam_indices_el for x in is_gold_leaf_idx])
                     )
