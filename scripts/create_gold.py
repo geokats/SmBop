@@ -14,4 +14,4 @@ with open(args.o, 'w') as f:
 	for example in examples:
 		query = ' '.join(example['query'].split())
 		db_id = example['db_id']
-		f.write(f"{example}\t{db_id}\n")
+		f.write(f"{query}\t{db_id}\n")
