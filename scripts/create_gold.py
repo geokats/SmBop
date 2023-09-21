@@ -12,4 +12,6 @@ with open(args.i, 'r') as f:
 
 with open(args.o, 'w') as f:
 	for example in examples:
-		f.write(f"{example['query']}\t{example['db_id']}\n")
+		query = ' '.join(example['query'].split())
+		db_id = example['db_id']
+		f.write(f"{example}\t{db_id}\n")
